@@ -55,7 +55,17 @@
   <script>
     const video = document.querySelector("#noaVideo");
     const target = document.querySelector("[mindar-image-target]");
+    const xButton = document.querySelector("#xButton");
 
+    video.addEventListener("ended", () => {
+      xButton.setAttribute("visible", true);
+    });
+    xButton.addEventListener("click", () => {
+      window.open(
+        "https://x.com/irunoa_vrc",
+        "_blank"
+  );
+});
     target.addEventListener("targetFound", () => {
       video.play();
     });
