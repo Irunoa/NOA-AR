@@ -54,27 +54,30 @@
   </a-scene>
 
   <script>
-    const video = document.querySelector("#noaVideo");
-    const target = document.querySelector("[mindar-image-target]");
-    const xButton = document.querySelector("#xButton");
+   const video = document.querySelector("#noaVideo");
+const target = document.querySelector("[mindar-image-target]");
+const xButton = document.querySelector("#xButton");
 
-    video.addEventListener("ended", () => {
-      xButton.setAttribute("visible", true);
-    });
-    xButton.addEventListener("click", () => {
-      window.open(
-        "https://x.com/irunoa_vrc",
-        "_blank"
-  );
+target.addEventListener("targetFound", () => {
+  xButton.setAttribute("visible", "false");
+  video.pause();
+  video.currentTime = 0;
+  video.play();
 });
-    target.addEventListener("targetFound", () => {
-      video.play();
-    });
 
-    target.addEventListener("targetLost", () => {
-      video.pause();
-      video.currentTime = 0;
-    });
+target.addEventListener("targetLost", () => {
+  video.pause();
+  video.currentTime = 0;
+  xButton.setAttribute("visible", "false");
+});
+
+video.addEventListener("ended", () => {
+  xButton.setAttribute("visible", "true");
+});
+
+xButton.addEventListener("click", () => {
+  window.open("https://x.com/irunoa_vrc", "_blank");
+});
   </script>
 </body>
 </html>
