@@ -13,30 +13,44 @@
       overflow: hidden;
     }
 
-    #xButton {
-      position: fixed;
-      bottom: 40px;
-      left: 50%;
-      transform: translateX(-50%);
+   #xButton {
+  position: fixed;
+  bottom: 40px;
+  left: calc(50% - 45px);
 
-      width: 70px;
-      height: 70px;
+  width: 70px;
+  height: 70px;
 
-      border: none;
-      background: transparent;
-      padding: 0;
+  border: none;
+  background: transparent;
 
-      display: none;
+  display: none;
 
-      z-index: 9999;
-    }
+  z-index: 9999;
+}
 
-    #xButton img {
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-      display: block;
-    }
+#vrcButton {
+  position: fixed;
+  bottom: 40px;
+  left: calc(50% + 45px);
+
+  width: 70px;
+  height: 70px;
+
+  border: none;
+  background: transparent;
+
+  display: none;
+
+  z-index: 9999;
+}
+
+#xButton img,
+#vrcButton img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
   </style>
 </head>
 
@@ -45,7 +59,10 @@
   <button id="xButton" type="button" aria-label="Open X profile">
     <img src="./assets/x-icon.png" alt="X">
   </button>
-
+  <button id="vrcButton" type="button" aria-label="Open VRChat profile">
+    <img src="./assets/vrc-icon.png" alt="VRChat">
+  </button>
+  
   <a-scene
     mindar-image="imageTargetSrc: ./assets/targets.mind;"
     color-space="sRGB"
@@ -82,8 +99,9 @@
 
   <script>
     const video = document.querySelector("#noaVideo");
-const target = document.querySelector("[mindar-image-target]");
-const xButton = document.querySelector("#xButton");
+    const target = document.querySelector("[mindar-image-target]");
+    const xButton = document.querySelector("#xButton");
+    const vrcButton = document.querySelector("#vrcButton");
 
 let showButtonTimer = null;
 let isTargetVisible = false;
@@ -92,6 +110,7 @@ target.addEventListener("targetFound", () => {
   isTargetVisible = true;
 
   xButton.style.display = "none";
+  vrcButton.style.display = "none";
 
   if (showButtonTimer) {
     clearTimeout(showButtonTimer);
@@ -104,6 +123,7 @@ target.addEventListener("targetFound", () => {
   showButtonTimer = setTimeout(() => {
     if (isTargetVisible) {
       xButton.style.display = "block";
+      vrcButton.style.display = "block";
     }
   }, 15000);
 });
@@ -114,6 +134,7 @@ target.addEventListener("targetLost", () => {
   video.pause();
   video.currentTime = 0;
   xButton.style.display = "none";
+  vrcButton.style.display = "none";
 
   if (showButtonTimer) {
     clearTimeout(showButtonTimer);
@@ -122,6 +143,11 @@ target.addEventListener("targetLost", () => {
 
 xButton.addEventListener("click", () => {
   location.href = "https://x.com/irunoa_vrc";
+});
+
+vrcButton.addEventListener("click", () => {
+  location.href =
+    "https://vrchat.com/home/user/usr_0d379726-4fbc-45f0-a41a-84ce8537e66f";
 });
   </script>
 
