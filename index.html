@@ -176,7 +176,9 @@ target.addEventListener("targetLost", () => {
 });
 
 video.addEventListener("ended", () => {
-  xButton.setAttribute("visible", "true");
+   alert("動画終了");
+  xButton.style.display = "block";
+
 });
 
 xButton.addEventListener("click", () => {
