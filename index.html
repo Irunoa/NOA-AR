@@ -8,30 +8,6 @@
   <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js"></script>
 
   <style>
-    body { margin: 0; overflow: hidden; }
-  </style>
-</head>
-
-<body>
-  <a-scene
-    mindar-image="imageTargetSrc: ./assets/targets.mind;"
-    color-space="sRGB"
-    renderer="colorManagement: true, physicallyCorrectLights"
-    vr-mode-ui="enabled: false"
-    device-orientation-permission-ui="enabled: false">
-
-   <!DOCTYPE html>
-
-<html>
-<head>
-  <meta charset="UTF-8">
-  <title>NOA AR</title>
-
-  <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
-
-  <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js"></script>
-
-  <style>
     body {
       margin: 0;
       overflow: hidden;
@@ -48,6 +24,7 @@
 
       border: none;
       background: transparent;
+      padding: 0;
 
       display: none;
 
@@ -58,133 +35,79 @@
       width: 100%;
       height: 100%;
       object-fit: contain;
+      display: block;
     }
   </style>
-
 </head>
 
 <body>
 
-  <button id="xButton">
-    <img src="./assets/x-icon.png">
+  <button id="xButton" type="button" aria-label="Open X profile">
+    <img src="./assets/x-icon.png" alt="X">
   </button>
 
-<a-scene
- mindar-image="imageTargetSrc: ./assets/targets.mind;"
- color-space="sRGB"
- renderer="colorManagement: true, physicallyCorrectLights"
- vr-mode-ui="enabled: false"
- device-orientation-permission-ui="enabled: false">
+  <a-scene
+    mindar-image="imageTargetSrc: ./assets/targets.mind;"
+    color-space="sRGB"
+    renderer="colorManagement: true, physicallyCorrectLights"
+    vr-mode-ui="enabled: false"
+    device-orientation-permission-ui="enabled: false">
 
-```
-<a-assets>
+    <a-assets>
+      <video
+        id="noaVideo"
+        src="./assets/名刺動画.mp4"
+        muted
+        playsinline
+        webkit-playsinline>
+      </video>
+    </a-assets>
 
-  <video
-    id="noaVideo"
-    src="./assets/名刺動画.mp4"
-    muted
-    playsinline
-    webkit-playsinline>
-  </video>
+    <a-camera
+      position="0 0 0"
+      look-controls="enabled: false">
+    </a-camera>
 
-</a-assets>
-
-<a-camera
-  position="0 0 0"
-  look-controls="enabled: false">
-</a-camera>
-
-<a-entity mindar-image-target="targetIndex: 0">
-
-  <a-video
-    src="#noaVideo"
-    position="0 0 0"
-    width="1.65"
-    height="1"
-    rotation="0 0 0">
-  </a-video>
-
-</a-entity>
-```
+    <a-entity mindar-image-target="targetIndex: 0">
+      <a-video
+        src="#noaVideo"
+        position="0 0 0"
+        width="1.65"
+        height="1"
+        rotation="0 0 0">
+      </a-video>
+    </a-entity>
 
   </a-scene>
 
   <script>
-
     const video = document.querySelector("#noaVideo");
     const target = document.querySelector("[mindar-image-target]");
     const xButton = document.querySelector("#xButton");
 
     target.addEventListener("targetFound", () => {
-
       xButton.style.display = "none";
 
       video.pause();
       video.currentTime = 0;
       video.play();
-
     });
 
     target.addEventListener("targetLost", () => {
-
       video.pause();
       video.currentTime = 0;
 
       xButton.style.display = "none";
-
     });
 
     video.addEventListener("ended", () => {
-
       xButton.style.display = "block";
-
     });
 
     xButton.addEventListener("click", () => {
-
-      window.open(
-        "https://x.com/irunoa_vrc",
-        "_blank"
-      );
-
+      window.location.href = "https://x.com/irunoa_vrc";
     });
-
   </script>
 
-</body>
-</html>
-
-
-  </a-scene>
-
-  <script>
-   const video = document.querySelector("#noaVideo");
-const target = document.querySelector("[mindar-image-target]");
-const xButton = document.querySelector("#xButton");
-
-target.addEventListener("targetFound", () => {
-  xButton.setAttribute("visible", "false");
-  video.pause();
-  video.currentTime = 0;
-  video.play();
-});
-
-target.addEventListener("targetLost", () => {
-  video.pause();
-  video.currentTime = 0;
-  xButton.setAttribute("visible", "false");
-});
-
-video.addEventListener("ended", () => {
-   alert("動画終了");
-  xButton.style.display = "block";
-
-});
-
-xButton.addEventListener("click", () => {
-   alert("Xボタンが押されました");
-  window.open("https://x.com/irunoa_vrc", "_blank");
-});
-  </script>
 </body>
 </html>
