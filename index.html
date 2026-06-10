@@ -82,31 +82,47 @@
 
   <script>
     const video = document.querySelector("#noaVideo");
-    const target = document.querySelector("[mindar-image-target]");
-    const xButton = document.querySelector("#xButton");
+const target = document.querySelector("[mindar-image-target]");
+const xButton = document.querySelector("#xButton");
 
-    target.addEventListener("targetFound", () => {
-      xButton.style.display = "none";
+let showButtonTimer = null;
+let isTargetVisible = false;
 
-      video.pause();
-      video.currentTime = 0;
-      video.play();
-    });
+target.addEventListener("targetFound", () => {
+  isTargetVisible = true;
 
-    target.addEventListener("targetLost", () => {
-      video.pause();
-      video.currentTime = 0;
+  xButton.style.display = "none";
 
-      xButton.style.display = "none";
-    });
+  if (showButtonTimer) {
+    clearTimeout(showButtonTimer);
+  }
 
-    video.addEventListener("ended", () => {
+  video.pause();
+  video.currentTime = 0;
+  video.play();
+
+  showButtonTimer = setTimeout(() => {
+    if (isTargetVisible) {
       xButton.style.display = "block";
-    });
+    }
+  }, 15000);
+});
 
-    xButton.addEventListener("click", () => {
-      window.location.href = "https://x.com/irunoa_vrc";
-    });
+target.addEventListener("targetLost", () => {
+  isTargetVisible = false;
+
+  video.pause();
+  video.currentTime = 0;
+  xButton.style.display = "none";
+
+  if (showButtonTimer) {
+    clearTimeout(showButtonTimer);
+  }
+});
+
+xButton.addEventListener("click", () => {
+  location.href = "https://x.com/irunoa_vrc";
+});
   </script>
 
 </body>
